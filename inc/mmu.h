@@ -136,10 +136,10 @@
 /*
  * Macros to build GDT entries in assembly.
  */
-#define SEG_NULL						\
-	.word 0, 0;						\
+#define SEG_NULL										\
+	.word 0, 0;											\
 	.byte 0, 0, 0, 0
-#define SEG(type,base,lim)					\
+#define SEG(type,base,lim)								\
 	.word (((lim) >> 12) & 0xffff), ((base) & 0xffff);	\
 	.byte (((base) >> 16) & 0xff), (0x90 | (type)),		\
 		(0xC0 | (((lim) >> 28) & 0xf)), (((base) >> 24) & 0xff)
@@ -169,13 +169,14 @@ struct Segdesc {
 // Segment that is loadable but faults when used
 #define SEG_FAULT	(struct Segdesc){ 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0 }
 // Normal segment
-#define SEG(type, base, lim, dpl) (struct Segdesc)			\
+#define SEG(type, base, lim, dpl) (struct Segdesc)					\
 { ((lim) >> 12) & 0xffff, (base) & 0xffff, ((base) >> 16) & 0xff,	\
-    type, 1, dpl, 1, (unsigned) (lim) >> 28, 0, 0, 1, 1,		\
+    type, 1, dpl, 1, (unsigned) (lim) >> 28, 0, 0, 1, 1,			\
     (unsigned) (base) >> 24 }
-#define SEG16(type, base, lim, dpl) (struct Segdesc)			\
-{ (lim) & 0xffff, (base) & 0xffff, ((base) >> 16) & 0xff,		\
-    type, 1, dpl, 1, (unsigned) (lim) >> 16, 0, 0, 1, 0,		\
+
+#define SEG16(type, base, lim, dpl) (struct Segdesc)				\
+{ (lim) & 0xffff, (base) & 0xffff, ((base) >> 16) & 0xff,			\
+    type, 1, dpl, 1, (unsigned) (lim) >> 16, 0, 0, 1, 0,			\
     (unsigned) (base) >> 24 }
 
 #endif /* !__ASSEMBLER__ */
